@@ -2,7 +2,6 @@
 
 import prisma from '@/app/libs/prismaConn';
 import { NextResponse } from 'next/server';
-import { serialize } from 'cookie';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -31,8 +30,8 @@ export const POST = async (request: Request) => {
 
     const token = jwt.sign(
       {
-        id: user._id,
-        role: user.role,
+        id: 'userid',
+        role: 'userrole',
       },
       process.env.JWT_SECRET,
       {
@@ -40,18 +39,18 @@ export const POST = async (request: Request) => {
       }
     );
 
-    const serialized = serialize('OutSiteJWT', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: MAX_AGE,
-      path: '/',
-    });
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: 'Authenticated',
       status: 200,
-      headers: { 'Set-Cookie': serialized },
     });
+
+    response.cookies.set({
+      name: 'Bearer',
+      value: token,
+      httpOnly: true,
+      maxAge: 60 * 60,
+    });
+    return response;
   } catch (error) {
     console.log(error);
     return NextResponse.json(
