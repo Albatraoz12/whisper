@@ -1,13 +1,14 @@
-// URL: /api/user
+// URL: /api/user/login
 
 import prisma from '@/app/libs/prismaConn';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const MAX_AGE = 60 * 60 * 24 * 30;
 
-// Create User
+// Authenticate user
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
@@ -57,5 +58,25 @@ export const POST = async (request: Request) => {
       { message: 'Login Error', error },
       { status: 500 }
     );
+  }
+};
+
+// Logout User
+export const DELETE = (response: NextResponse) => {
+  try {
+    const cookie = response.cookies.get('Bearer');
+    if (!cookie)
+      return NextResponse.json(
+        { message: 'Not Authenticaded' },
+        { status: 400 }
+      );
+    cookies().delete('Bearer');
+    return NextResponse.json(
+      { message: 'Successfully logged out' },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 };
