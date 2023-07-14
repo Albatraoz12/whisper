@@ -102,8 +102,18 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
     const body = await request.json();
     const { username, email, firstName, lastName } = body;
 
+    const token = request.cookies.get('Bearer');
+
+    if (!token || !token.value)
+      return NextResponse.json(
+        { message: 'Not Authenticaded' },
+        { status: 400 }
+      );
+
+    const userData = jwt.verify(token.value, process.env.JWT_SECRET); // Decode the JWT to verify the user
+
     const newUser = await prisma.user.update({
-      where: { id: '64b151875f95dae1e1a7a864' },
+      where: { id: userData.id },
       data: {
         username,
         email,
