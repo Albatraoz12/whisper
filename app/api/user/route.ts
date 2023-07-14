@@ -1,10 +1,13 @@
+// URL: /api/user
+
 import prisma from '@/app/libs/prismaConn';
 import { NextResponse } from 'next/server';
 
+// Create User
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    const { username, email, password, firstName, lastName, bla } = body;
+    const { username, email, password, firstName, lastName } = body;
     const newUser = await prisma.user.create({
       data: {
         username,
