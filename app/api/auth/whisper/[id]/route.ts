@@ -36,3 +36,44 @@ export const PUT = async (request: NextRequest, { params }: any) => {
 
   return NextResponse.json({ message: updatedWhisper });
 };
+
+// Delete Users whisper
+export const DELETE = async (request: NextRequest, { params }: any) => {
+  try {
+    const token = request.cookies.get('Bearer');
+
+    const whisperId = params.id;
+
+    if (!token || !token.value)
+      return NextResponse.json(
+        { message: 'Not Authenticaded' },
+        { status: 400 }
+      );
+
+    const userData = jwt.verify(token.value, process.env.JWT_SECRET); // Decode the JWT to verify the user
+    const authorId = userData.id;
+
+    // find the whisper with ID
+    const findWhisper = await prisma.whisper.findUnique({
+      where: { id: whisperId },
+    });
+
+    // validate the real author to update it
+    if (findWhisper.authorId != authorId) {
+      return NextResponse.json({
+        message: 'You are not the owner of this ID',
+      });
+    }
+
+    const deleteWhisper = await prisma.whisper.delete({
+      where: { id: whisperId },
+    });
+
+    return NextResponse.json(
+      { message: 'successfully deleted whisper' },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json({ message: error }, { status: 500 });
+  }
+};
