@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/libs/prismaConn.js"
+    "app/libs/prismaConn.js",
+    "app/api/auth/whisper/[id]"
   ],
   "exclude": ["node_modules"]
 }
