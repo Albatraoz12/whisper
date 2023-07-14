@@ -2,7 +2,7 @@
 
 import prisma from '@/app/libs/prismaConn';
 import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -31,8 +31,8 @@ export const POST = async (request: Request) => {
 
     const token = jwt.sign(
       {
-        id: 'userid',
-        role: 'userrole',
+        id: user.id,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       {
@@ -58,6 +58,41 @@ export const POST = async (request: Request) => {
       { message: 'Login Error', error },
       { status: 500 }
     );
+  }
+};
+
+// Get user details
+export const GET = async (response: NextResponse) => {
+  try {
+    const token = response.cookies.get('Bearer'); // Get the Token from header
+
+    // If token not exist return errer message
+    if (!token || !token.value)
+      return NextResponse.json(
+        { message: 'Not Authenticaded' },
+        { status: 401 }
+      );
+
+    const userData = jwt.verify(token.value, process.env.JWT_SECRET); // Decode the JWT to verify the user
+
+    // Find user and return data
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userData.id,
+      },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+      },
+    });
+
+    return NextResponse.json({ User: user });
+  } catch (error) {
+    console.error('Error retrieving user:', error);
+    throw error;
   }
 };
 
