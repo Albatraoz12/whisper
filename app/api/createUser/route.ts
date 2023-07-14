@@ -1,4 +1,4 @@
-// URL: /api/user
+// URL: /api/createUser
 
 import prisma from '@/app/libs/prismaConn';
 import { NextResponse } from 'next/server';
