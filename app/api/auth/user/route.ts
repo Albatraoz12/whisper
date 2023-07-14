@@ -65,7 +65,7 @@ export const POST = async (request: Request) => {
 export const DELETE = (response: NextResponse) => {
   try {
     const cookie = response.cookies.get('Bearer');
-    if (!cookie)
+    if (!cookie || !cookie.value)
       return NextResponse.json(
         { message: 'Not Authenticaded' },
         { status: 400 }
