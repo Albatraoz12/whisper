@@ -1,9 +1,10 @@
-import Image from 'next/image';
-
-export default function Home() {
+export default async function Home() {
   return (
-    <section className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <h1>Hello World</h1>
+    <section className='container mx-auto my-4 w-[90%] text-center'>
+      <h1>Welcome User</h1>
+      <div className='container border-stone-100'>
+        <p>What is on your mind ?</p>
+      </div>
     </section>
   );
 }
