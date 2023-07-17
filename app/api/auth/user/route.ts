@@ -22,7 +22,7 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
     if (!findUser) return NextResponse.json({ message: 'No user found' });
 
     const newUser = await prisma.user.update({
-      where: { id: 'userData.id' },
+      where: { id: userId },
       data: {
         username,
         email,
