@@ -22,7 +22,7 @@ export const authOpstions: AuthOptions = {
         email: { type: 'text', placeholder: 'test@test.com' },
         password: { type: 'password', placeholder: 'AwesomePassword' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, req): Promise<any> {
         const { email, password } = loginUserSchema.parse(credentials);
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) return null;
@@ -41,6 +41,9 @@ export const authOpstions: AuthOptions = {
   callbacks: {
     session({ session, token }) {
       session.user.id = token.id;
+      session.user.username = token.username;
+      session.user.firstName = token.firstName;
+      session.user.lastName = token.lastName;
       return session;
     },
     jwt({ token, account, user }) {
