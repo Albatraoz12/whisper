@@ -1,5 +1,6 @@
 // URL: /api/public/user/createUser
 
+import { generateUsername } from '@/app/libs/helpers';
 import prisma from '@/app/libs/prismaConn';
 import { NextResponse } from 'next/server';
 const bcrypt = require('bcrypt');
@@ -8,12 +9,13 @@ const bcrypt = require('bcrypt');
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    const { username, email, password, firstName, lastName } = body;
+    const { email, password, firstName, lastName } = body;
     const hashedPassword = bcrypt.hashSync(password, 10);
+    const username = generateUsername(firstName, lastName);
 
     const newUser = await prisma.user.create({
       data: {
-        username,
+        username: username,
         email,
         password: hashedPassword,
         firstName,
