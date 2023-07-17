@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next-auth/prisma-adapter": "^0.4.4-canary.81",
     "@prisma/client": "^5.0.0",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
@@ -19,6 +20,7 @@
     "eslint-config-next": "13.4.10",
     "jsonwebtoken": "^9.0.1",
     "next": "13.4.10",
+    "next-auth": "^4.22.1",
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
