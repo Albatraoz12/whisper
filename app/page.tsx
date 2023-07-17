@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { authOpstions } from './api/auth/[...nextauth]/route';
+import CreateWhisper from './components/CreateWhisper';
 
 export default async function Home() {
   const session = await getServerSession(authOpstions);
@@ -13,6 +14,7 @@ export default async function Home() {
       </h1>
       <div className='container border-stone-100'>
         <p>What is on your mind ?</p>
+        <CreateWhisper />
       </div>
     </section>
   );
