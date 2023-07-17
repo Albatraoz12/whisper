@@ -1,23 +1,23 @@
 // URL: /api/auth/whisper/id
 
 import prisma from '@/app/libs/prismaConn';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-const jwt = require('jsonwebtoken');
+import { authOpstions } from '../../[...nextauth]/route';
 
 // update whisper
 
 export const PUT = async (request: NextRequest, { params }: any) => {
   const body = await request.json();
   const { content } = body;
-  const token = request.cookies.get('Bearer');
+  const session = await getServerSession(authOpstions);
 
   const whisperId = params.id;
 
-  if (!token || !token.value)
+  if (!session)
     return NextResponse.json({ message: 'Not Authenticaded' }, { status: 400 });
 
-  const userData = jwt.verify(token.value, process.env.JWT_SECRET); // Decode the JWT to verify the user
-  const authorId = userData.id;
+  const authorId = session.user.id;
 
   // find the whisper with ID
   const findWhisper = await prisma.whisper.findUnique({
@@ -40,18 +40,16 @@ export const PUT = async (request: NextRequest, { params }: any) => {
 // Delete Users whisper
 export const DELETE = async (request: NextRequest, { params }: any) => {
   try {
-    const token = request.cookies.get('Bearer');
-
+    const session = await getServerSession(authOpstions);
     const whisperId = params.id;
 
-    if (!token || !token.value)
+    if (!session)
       return NextResponse.json(
         { message: 'Not Authenticaded' },
         { status: 400 }
       );
 
-    const userData = jwt.verify(token.value, process.env.JWT_SECRET); // Decode the JWT to verify the user
-    const authorId = userData.id;
+    const authorId = session.user.id;
 
     // find the whisper with ID
     const findWhisper = await prisma.whisper.findUnique({
@@ -70,7 +68,7 @@ export const DELETE = async (request: NextRequest, { params }: any) => {
     });
 
     return NextResponse.json(
-      { message: 'successfully deleted whisper' },
+      { message: 'successfully deleted whisper', whisper: deleteWhisper },
       { status: 200 }
     );
   } catch (error) {
