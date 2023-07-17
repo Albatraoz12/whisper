@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,19 +11,23 @@ datasource db {
 }
 
 model User {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  username  String   @unique
-  email     String   @unique
-  password  String
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  username  String?    @unique
+  email     String     @unique
+  password  String?    
+  name      String?
   firstName String?
   lastName  String?
-  role      String    @default("user")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  emailVerified     String?
+  role      String?    @default("user")
+  image     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   whispers  Whisper[]
   comments  Comment[]
+  accounts  Account[]
+  sessions  Session[]
 }
-
 
 model Whisper {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
@@ -33,12 +40,48 @@ model Whisper {
 }
 
 model Comment {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String    @db.ObjectId
-  whisper   Whisper  @relation(fields: [whisperId], references: [id])
-  whisperId String    @db.ObjectId
+  id              String      @id @default(cuid()) @map("_id")
+  title           String
+  postId          String    @db.ObjectId  // Add @db.ObjectId to match native type
+  userId          String    @db.ObjectId  // Add @db.ObjectId to match native type
+  createdAt       DateTime    @default(now())
+  whisper         Whisper        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [userId], references: [id])
+}
+
+
+model Account {
+  id                 String  @id @default(cuid()) @map("_id")
+  userId             String  @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.String
+  access_token       String? @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.String
+  session_state      String?
+
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id               String      @id @default(cuid()) @map("_id")
+  sessionToken     String      @unique
+  userId           String    @db.ObjectId  // Add @db.ObjectId to match native type
+  expires          DateTime
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+model VerificationToken {
+  id                 String   @id @default(cuid()) @map("_id")
+  user_id            String   @unique @map("user_id")
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  id_token           String?  @db.String
 }
