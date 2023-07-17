@@ -2,7 +2,6 @@ import prisma from '@/app/libs/prismaConn';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOpstions } from '../[...nextauth]/route';
-const jwt = require('jsonwebtoken');
 
 // Create whisper
 export const POST = async (request: NextRequest) => {
@@ -10,6 +9,17 @@ export const POST = async (request: NextRequest) => {
     const session = await getServerSession(authOpstions);
     const body = await request.json();
     const { content } = body;
+
+    if (!content)
+      return NextResponse.json(
+        { message: 'Please fill in the feild' },
+        { status: 400 }
+      );
+    if (!session)
+      return NextResponse.json(
+        { message: 'You need to bee signin to whisper' },
+        { status: 400 }
+      );
 
     const authorId = session?.user.id;
 
