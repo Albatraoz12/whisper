@@ -31,7 +31,7 @@ const CreateWhisper = () => {
 
   return (
     <>
-      <form className='flex flex-col gap-10' onSubmit={handleSubmit}>
+      <form className='flex flex-col gap-10 mt-10' onSubmit={handleSubmit}>
         <label htmlFor='whisper' className='hidden'>
           Whisper
         </label>
@@ -40,7 +40,7 @@ const CreateWhisper = () => {
           id='whisper'
           cols={50}
           rows={10}
-          className='bg-black text-white'
+          className='bg-black text-white border-2 p-4 active:outline-none focus:border-gray-300 focus:outline-none'
           placeholder='Whisper into my ear'
           value={whisperContent}
           onChange={handleChange}
