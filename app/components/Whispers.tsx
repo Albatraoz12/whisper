@@ -15,7 +15,7 @@ const Whispers = ({ Whisps }: any) => {
         Whisps.length > 0 &&
         Whisps.map((whisper: any, index: number) => (
           <div key={index} className='border-2 rounded p-6 border-white'>
-            <a href='#' className='flex flex-col gap-4'>
+            <a href={`/whisper/${whisper.id}`} className='flex flex-col gap-4'>
               <h2>{whisper.author.username}</h2>
               <p>{whisper.content}</p>
               <p className='self-end'>{formatCreatedAt(whisper.createdAt)}</p>
