@@ -20,7 +20,7 @@ export default async function Home() {
 
   return (
     <>
-      <section className='container mx-auto my-4 w-[90%] text-center'>
+      <section className='container mx-auto my-4 text-center'>
         <h1>
           {session
             ? 'Welcome ' +
@@ -34,7 +34,7 @@ export default async function Home() {
           <CreateWhisper />
         </div>
       </section>
-      <section>
+      <section className='container mx-auto'>
         <Whispers Whisps={whispData} />
       </section>
     </>
