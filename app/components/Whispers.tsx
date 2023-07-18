@@ -11,8 +11,7 @@ const Whispers = ({ Whisps }: any) => {
 
   return (
     <div className='flex flex-col gap-3 mt-12'>
-      {Whisps &&
-        Whisps.length > 0 &&
+      {Array.isArray(Whisps) && Whisps.length > 0 ? (
         Whisps.map((whisper: any, index: number) => (
           <div key={index} className='border-2 rounded p-6 border-white'>
             <a href={`/whisper/${whisper.id}`} className='flex flex-col gap-4'>
@@ -21,7 +20,14 @@ const Whispers = ({ Whisps }: any) => {
               <p className='self-end'>{formatCreatedAt(whisper.createdAt)}</p>
             </a>
           </div>
-        ))}
+        ))
+      ) : (
+        <div className='border-2 rounded p-6 border-white'>
+          <h2>{Whisps?.author?.username || 'Unknown'}</h2>
+          <p>{Whisps?.content}</p>
+          <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
+        </div>
+      )}
     </div>
   );
 };
