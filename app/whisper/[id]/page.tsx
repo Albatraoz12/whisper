@@ -14,15 +14,10 @@ const page = async ({ params }: any) => {
       }
     );
     const data = await res.json();
-    console.log('data', data);
+    return data;
   };
   const whisper = await fetchWhisper();
-  return (
-    <section>
-      {params.id}
-      <Whispers whisper={whisper} />
-    </section>
-  );
+  return <section>{whisper && <Whispers Whisps={whisper} />}</section>;
 };
 
 export default page;
