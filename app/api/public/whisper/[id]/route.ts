@@ -9,6 +9,13 @@ export const GET = async (request: NextRequest, { params }: any) => {
     const whisperId = params.id;
     const whisper = await prisma.whisper.findUnique({
       where: { id: whisperId },
+      include: {
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
     });
 
     if (!whisper) {
@@ -18,7 +25,7 @@ export const GET = async (request: NextRequest, { params }: any) => {
       );
     }
 
-    return NextResponse.json({ whisper: whisper }, { status: 200 });
+    return NextResponse.json(whisper, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: 'An error occurred while retrieving the whisper' },
