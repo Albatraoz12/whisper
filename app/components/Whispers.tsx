@@ -15,7 +15,7 @@ const Whispers = ({ Whisps }: any) => {
         Whisps.map((whisper: any, index: number) => (
           <div key={index} className='border-2 rounded p-6 border-white'>
             <a href={`/whisper/${whisper.id}`} className='flex flex-col gap-4'>
-              <h2>{whisper.author.username}</h2>
+              <h2>{whisper.author.username || whisper.author?.name}</h2>
               <p>{whisper.content}</p>
               <p className='self-end'>{formatCreatedAt(whisper.createdAt)}</p>
             </a>
@@ -23,7 +23,7 @@ const Whispers = ({ Whisps }: any) => {
         ))
       ) : (
         <div className='border-2 rounded p-6 border-white'>
-          <h2>{Whisps?.author?.username || 'Unknown'}</h2>
+          <h2>{Whisps?.author?.username || Whisps.author?.name}</h2>
           <p>{Whisps?.content}</p>
           <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
         </div>

@@ -10,6 +10,7 @@ export const GET = async (response: NextResponse) => {
         author: {
           select: {
             username: true,
+            name: true,
           },
         },
       },
