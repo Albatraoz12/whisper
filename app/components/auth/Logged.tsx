@@ -4,7 +4,9 @@ import { signOut } from 'next-auth/react';
 export default function Logged({ user }: any) {
   return (
     <li className='flex gap-8 items-center'>
-      <p>{user && user.name ? <>{user.name}</> : <>{user.firstName}</>}</p>
+      <p className=' hidden xs:block md:block'>
+        {user && user.name ? <>{user.name}</> : <>{user.firstName}</>}
+      </p>
       <button
         className='bg-gray-700 text-white text-sm px-6 py-2 rounded-md'
         onClick={() => signOut()}
