@@ -29,11 +29,16 @@ const Whispers = ({ Whisps }: any) => {
           </motion.div>
         ))
       ) : (
-        <div className='border-2 rounded p-6 border-white'>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className='border-2 rounded p-6 border-white'
+        >
           <h2>{Whisps?.author?.username || Whisps?.author.name}</h2>
           <p>{Whisps?.content}</p>
           <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
-        </div>
+        </motion.div>
       )}
     </div>
   );
