@@ -13,6 +13,7 @@ export const GET = async (request: NextRequest, { params }: any) => {
         author: {
           select: {
             username: true,
+            name: true,
           },
         },
       },

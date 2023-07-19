@@ -23,7 +23,7 @@ const Whispers = ({ Whisps }: any) => {
         ))
       ) : (
         <div className='border-2 rounded p-6 border-white'>
-          <h2>{Whisps?.author?.username || Whisps.author?.name}</h2>
+          <h2>{Whisps?.author?.username || Whisps?.author.name}</h2>
           <p>{Whisps?.content}</p>
           <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
         </div>
