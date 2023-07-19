@@ -1,14 +1,7 @@
 'use client';
-
-import Image from 'next/image';
 import { signOut } from 'next-auth/react';
-import Link from 'next/link';
 
-type User = {
-  image: string;
-};
-
-export default function Logged({ image }: User) {
+export default function Logged() {
   return (
     <li className='flex gap-8 items-center'>
       <button
@@ -17,16 +10,6 @@ export default function Logged({ image }: User) {
       >
         Sign Out
       </button>
-      <Link href={'/'}>
-        <Image
-          className='w-14 rounded-full'
-          width={64}
-          height={64}
-          src={image}
-          alt='user progile pic'
-          priority
-        />
-      </Link>
     </li>
   );
 }
