@@ -14,6 +14,9 @@ export const GET = async (response: NextResponse) => {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return NextResponse.json({ whispers: allWhispers }, { status: 200 });
