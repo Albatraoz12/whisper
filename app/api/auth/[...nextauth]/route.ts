@@ -56,6 +56,9 @@ export const authOpstions: AuthOptions = {
       if (account) {
         token.accessToken = account.access_token;
         token.id = user.id;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
+        token.username = user.username;
         token.email = user.email;
       }
       return token;
