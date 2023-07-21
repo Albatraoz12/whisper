@@ -24,7 +24,12 @@ export const authOpstions: AuthOptions = {
       },
       async authorize(credentials, req): Promise<any> {
         const { email, password } = loginUserSchema.parse(credentials);
-        const user = await prisma.user.findUnique({ where: { email } });
+        const user = await prisma.user.findUnique({
+          where: { email },
+        });
+
+        console.log('user:', user);
+
         if (!user) return null;
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -39,17 +44,19 @@ export const authOpstions: AuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, token }) {
+    async session({ session, token }) {
       session.user.id = token.id;
       session.user.username = token.username;
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
+      session.user.email = token.email;
       return session;
     },
-    jwt({ token, account, user }) {
+    async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
         token.id = user.id;
+        token.email = user.email;
       }
       return token;
     },
