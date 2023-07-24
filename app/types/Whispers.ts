@@ -1,8 +1,8 @@
 export type WhispersTyps = {
-  id: String;
-  content: String;
-  createdAt: String;
-  updatedAt: String;
-  authorId: String;
-  author: { username: String };
+  id: string; // Change 'String' to 'string'
+  content: string; // Change 'String' to 'string'
+  createdAt: string; // Change 'String' to 'string'
+  updatedAt: string; // Change 'String' to 'string'
+  authorId: string; // Change 'String' to 'string'
+  author: { username: string }; // Change 'String' to 'string'
 };
