@@ -42,10 +42,10 @@ model Whisper {
 model Comment {
   id              String      @id @default(cuid()) @map("_id")
   title           String
-  postId          String    @db.ObjectId  // Add @db.ObjectId to match native type
+  whisperId          String    @db.ObjectId  // Add @db.ObjectId to match native type
   userId          String    @db.ObjectId  // Add @db.ObjectId to match native type
   createdAt       DateTime    @default(now())
-  whisper         Whisper        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  whisper         Whisper        @relation(fields: [whisperId], references: [id], onDelete: Cascade)
   user            User        @relation(fields: [userId], references: [id])
 }
 
