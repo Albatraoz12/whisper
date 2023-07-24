@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${inter.className} max-w-[1000px] mx-auto border-x-slate-200 border-x-2`}
+        className={`${inter.className} max-w-[1000px] min-h-[100vh] mx-auto border-x-slate-200 border-x-2`}
       >
         <QueryWrapper>
           <Navbar />
