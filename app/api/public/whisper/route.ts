@@ -13,6 +13,19 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
             name: true,
           },
         },
+        comments: {
+          select: {
+            id: true,
+            title: true,
+            createdAt: true,
+            user: {
+              select: {
+                username: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',
