@@ -7,7 +7,7 @@ const Whispers = ({ Whisps }: any) => {
 
   const formatCreatedAt = (createdAt: string) => {
     const date = new Date(createdAt);
-    return date.toLocaleDateString('sv-SE'); // Adjust the format as per your preference
+    return date.toLocaleDateString('sv-SE');
   };
 
   return (
@@ -24,7 +24,10 @@ const Whispers = ({ Whisps }: any) => {
             <a href={`/whisper/${whisper.id}`} className='flex flex-col gap-4'>
               <h2>{whisper.author.username || whisper.author?.name}</h2>
               <p>{whisper.content}</p>
-              <p className='self-end'>{formatCreatedAt(whisper.createdAt)}</p>
+              <div className='flex justify-between'>
+                <span>{whisper.comments.length} 💬</span>
+                <span>{formatCreatedAt(whisper.createdAt)}</span>
+              </div>
             </a>
           </motion.div>
         ))
