@@ -3,7 +3,6 @@ import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function Logged({ user }: any) {
-  console.log(user);
   return (
     <li className='flex gap-8 items-center'>
       {user && user.image ? (
