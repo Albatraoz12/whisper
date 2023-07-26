@@ -3,8 +3,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const Whispers = ({ Whisps }: any) => {
-  console.log(Whisps);
-
   const formatCreatedAt = (createdAt: string) => {
     const date = new Date(createdAt);
     return date.toLocaleDateString('sv-SE');
