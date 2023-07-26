@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { formatCreatedAt } from '../libs/helpers';
 
 const Comments = ({ comment }: any) => {
-  console.log('comments:', comment);
   if (comment.length <= 0 || !comment) return <div>No Comments....</div>;
   return (
     <motion.div
