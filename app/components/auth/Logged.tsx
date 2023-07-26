@@ -6,14 +6,16 @@ export default function Logged({ user }: any) {
   return (
     <li className='flex gap-8 items-center'>
       {user && user.image ? (
-        <Image
-          className='w-14 rounded-full'
-          width={64}
-          height={64}
-          src={user.image}
-          alt='user progile pic'
-          priority
-        />
+        <a href='/dashboard'>
+          <Image
+            className='w-14 rounded-full'
+            width={64}
+            height={64}
+            src={user.image}
+            alt='user progile pic'
+            priority
+          />
+        </a>
       ) : (
         <Image
           className='w-14 rounded-full'
