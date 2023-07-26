@@ -1,5 +1,6 @@
 'use client';
 import AddComment from '@/app/components/AddComment';
+import Comments from '@/app/components/Comments';
 import Whispers from '@/app/components/Whispers';
 import { WhispersTyps } from '@/app/types/Whispers';
 import axios from 'axios';
@@ -33,6 +34,7 @@ const Page = ({ params }: any) => {
       <section>
         <AddComment id={data.id} />
       </section>
+      <section>{data && <Comments comment={data.comments} />}</section>
     </>
   );
 };
