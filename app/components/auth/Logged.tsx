@@ -17,14 +17,16 @@ export default function Logged({ user }: any) {
           />
         </a>
       ) : (
-        <Image
-          className='w-14 rounded-full'
-          width={64}
-          height={64}
-          src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
-          alt='user progile pic'
-          priority
-        />
+        <a href='/dashboard'>
+          <Image
+            className='w-14 rounded-full'
+            width={64}
+            height={64}
+            src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
+            alt='user progile pic'
+            priority
+          />
+        </a>
       )}
       <p className=' hidden xs:block md:block'>
         {user && user.name ? <>{user.name}</> : <>{user.firstName}</>}
