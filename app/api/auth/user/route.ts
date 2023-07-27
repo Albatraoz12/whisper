@@ -71,6 +71,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
           select: {
             username: true,
             name: true,
+            image: true,
           },
         },
         comments: true,
