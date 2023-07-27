@@ -3,6 +3,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { WhispersTyps } from '../types/Whispers';
+import EditWhisper from './EditWhisper';
 
 const fetchAuthWhispers = async () => {
   const response = await axios.get('/api/auth/user');
@@ -10,7 +11,7 @@ const fetchAuthWhispers = async () => {
 };
 
 const MyWhispers = () => {
-  const { data, isLoading } = useQuery<WhispersTyps>({
+  const { data, isLoading } = useQuery<any>({
     queryFn: fetchAuthWhispers,
     queryKey: ['getAuthWhispers'],
   });
@@ -19,7 +20,25 @@ const MyWhispers = () => {
   console.log('data', data);
   return (
     <div>
-      <h2>Hello Dashboard</h2>
+      {data &&
+        data.map((whisper: any) => (
+          <EditWhisper
+            id={whisper.id}
+            key={whisper.id}
+            avatar={
+              whisper.author.username
+                ? `https://avatars.dicebear.com/api/identicon/${whisper.author.name}.svg`
+                : whisper.author.image
+            }
+            name={
+              whisper.author.name
+                ? whisper.author.name
+                : whisper.author.username
+            }
+            title={whisper.content}
+            comments={whisper.comments}
+          />
+        ))}
     </div>
   );
 };
