@@ -1,6 +1,15 @@
+'use client';
 import React from 'react';
 
 const Dashboard = () => {
+  const fetchUserData = async () => {
+    const response = await fetch(`http://localhost:3001/api/auth/user`);
+    const data = response.json();
+    return data;
+  };
+
+  const test = fetchUserData();
+  console.log(test);
   return (
     <section>
       <div>
