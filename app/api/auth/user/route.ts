@@ -64,6 +64,17 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     // Fetch user's whispers using the 'authorId' field
     const userWhispers = await prisma.whisper.findMany({
       where: { authorId: session.user.id },
+      select: {
+        id: true,
+        content: true,
+        author: {
+          select: {
+            username: true,
+            name: true,
+          },
+        },
+        comments: true,
+      },
     });
 
     return NextResponse.json(userWhispers);
