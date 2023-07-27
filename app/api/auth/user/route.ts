@@ -67,6 +67,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       select: {
         id: true,
         content: true,
+        createdAt: true,
         author: {
           select: {
             username: true,
