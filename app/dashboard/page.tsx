@@ -2,6 +2,7 @@ import React from 'react';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 import { authOpstions } from '../api/auth/[...nextauth]/route';
+import MyWhispers from './MyWhispers';
 
 const Dashboard = async () => {
   const session = await getServerSession(authOpstions);
@@ -11,11 +12,7 @@ const Dashboard = async () => {
 
   return (
     <section>
-      <div>
-        <h2>Your Dashboard</h2>
-      </div>
-      <div>Your Whispers</div>
-      <section>post1 post1 post1 post1 post1 post1</section>
+      <MyWhispers />
     </section>
   );
 };
