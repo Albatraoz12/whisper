@@ -19,7 +19,7 @@ const MyWhispers = () => {
   if (isLoading) return <h1>Loading Posts.....</h1>;
   console.log('data', data);
   return (
-    <div>
+    <div className='flex flex-col gap-3 mt-12'>
       {data &&
         data.map((whisper: any) => (
           <EditWhisper
@@ -35,8 +35,9 @@ const MyWhispers = () => {
                 ? whisper.author.name
                 : whisper.author.username
             }
-            title={whisper.content}
+            content={whisper.content}
             comments={whisper.comments}
+            createdAt={whisper.createdAt}
           />
         ))}
     </div>
