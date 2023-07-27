@@ -1,15 +1,14 @@
-'use client';
 import React from 'react';
+import { getServerSession } from 'next-auth/next';
+import { redirect } from 'next/navigation';
+import { authOpstions } from '../api/auth/[...nextauth]/route';
 
-const Dashboard = () => {
-  const fetchUserData = async () => {
-    const response = await fetch(`http://localhost:3001/api/auth/user`);
-    const data = response.json();
-    return data;
-  };
+const Dashboard = async () => {
+  const session = await getServerSession(authOpstions);
+  if (!session) {
+    redirect('/api/auth/signin');
+  }
 
-  const test = fetchUserData();
-  console.log(test);
   return (
     <section>
       <div>
