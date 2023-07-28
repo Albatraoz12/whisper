@@ -39,7 +39,7 @@ const CreateWhisper = () => {
           name='whisper'
           id='whisper'
           cols={50}
-          rows={10}
+          rows={5}
           className='bg-black text-white border-2 p-4 active:outline-none focus:border-gray-300 focus:outline-none'
           placeholder='Whisper into my ear'
           value={whisperContent}
