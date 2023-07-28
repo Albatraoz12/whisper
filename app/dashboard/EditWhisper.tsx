@@ -78,7 +78,9 @@ const EditWhisper = ({
         </div>
       </section>
       {toggle && <Toggle deletePost={deletePost} setToggle={setToggle} />}
-      {updateToggle && <UpdateToggle setToggle={setUpdateToggle} id={id} />}
+      {updateToggle && (
+        <UpdateToggle setToggle={setUpdateToggle} id={id} content={content} />
+      )}
     </>
   );
 };
