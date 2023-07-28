@@ -6,6 +6,7 @@ import { formatCreatedAt } from '../libs/helpers';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import Toggle from '../components/Toggle';
+import UpdateToggle from '../components/UpdateToggle';
 
 const EditWhisper = ({
   avatar,
@@ -16,6 +17,7 @@ const EditWhisper = ({
   createdAt,
 }: any) => {
   const [toggle, setToggle] = useState(false);
+  const [updateToggle, setUpdateToggle] = useState(false);
   let deleteToastID: string;
   const queryClient = useQueryClient();
 
@@ -60,14 +62,23 @@ const EditWhisper = ({
             <span>{formatCreatedAt(createdAt)}</span>
           </div>
         </a>
-        <button
-          onClick={() => setToggle(true)}
-          className='text-sm font-bold text-red-500'
-        >
-          Delete Post
-        </button>
+        <div className='flex gap-3 mt-10'>
+          <button
+            onClick={() => setToggle(true)}
+            className='text-sm font-bold text-red-500'
+          >
+            Delete Post
+          </button>
+          <button
+            onClick={() => setUpdateToggle(true)}
+            className='text-sm font-bold text-yellow-500'
+          >
+            Update Post
+          </button>
+        </div>
       </section>
       {toggle && <Toggle deletePost={deletePost} setToggle={setToggle} />}
+      {updateToggle && <UpdateToggle setToggle={setUpdateToggle} id={id} />}
     </>
   );
 };
