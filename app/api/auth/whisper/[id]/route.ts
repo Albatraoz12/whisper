@@ -8,33 +8,43 @@ import { authOpstions } from '../../[...nextauth]/route';
 // update whisper
 
 export const PUT = async (request: NextRequest, { params }: any) => {
-  const body = await request.json();
-  const { content } = body;
-  const session = await getServerSession(authOpstions);
+  try {
+    const body = await request.json();
+    const { content } = body;
 
-  const whisperId = params.id;
+    const session = await getServerSession(authOpstions);
 
-  if (!session)
-    return NextResponse.json({ message: 'Not Authenticaded' }, { status: 400 });
+    const whisperId = params.id;
 
-  const authorId = session.user.id;
+    if (!session)
+      return NextResponse.json(
+        { message: 'Not Authenticaded' },
+        { status: 400 }
+      );
 
-  // find the whisper with ID
-  const findWhisper = await prisma.whisper.findUnique({
-    where: { id: whisperId },
-  });
+    const authorId = session.user.id;
 
-  // validate the real author to update it
-  if (findWhisper.authorId != authorId) {
-    return NextResponse.json({ message: 'You are not the owner of this ID' });
+    // find the whisper with ID
+    const findWhisper = await prisma.whisper.findUnique({
+      where: { id: whisperId },
+    });
+
+    // validate the real author to update it
+    if (findWhisper.authorId != authorId) {
+      return NextResponse.json({
+        message: 'You are not the owner of this ID',
+      });
+    }
+
+    const updatedWhisper = await prisma.whisper.update({
+      where: { id: whisperId },
+      data: { content },
+    });
+
+    return NextResponse.json({ message: updatedWhisper });
+  } catch (error) {
+    return NextResponse.json(error, { status: 500 });
   }
-
-  const updatedWhisper = await prisma.whisper.update({
-    where: { id: whisperId },
-    data: { content },
-  });
-
-  return NextResponse.json({ message: updatedWhisper });
 };
 
 // Delete Users whisper
