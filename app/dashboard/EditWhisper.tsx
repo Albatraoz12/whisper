@@ -51,7 +51,13 @@ const EditWhisper = ({
       <section className='border-2 rounded p-6 border-white'>
         <a href={`/whisper/${id}`}>
           <div className='flex items-center gap-2'>
-            <Image width={32} height={32} src={avatar} alt='avatar' />
+            <Image
+              width={32}
+              height={32}
+              src={avatar}
+              alt='avatar'
+              className='rounded-full'
+            />
             <h3 className='font-bold'>{name}</h3>
           </div>
           <div className='my-8'>
