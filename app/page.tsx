@@ -4,6 +4,7 @@ import Whispers from './components/Whispers';
 import { useQuery } from 'react-query';
 import { WhispersTyps } from './types/Whispers';
 import axios from 'axios';
+import Image from 'next/image';
 
 export default function Home() {
   const getWhispers = async () => {
@@ -16,7 +17,18 @@ export default function Home() {
     queryKey: ['whispers'],
   });
   if (error) return error;
-  if (isLoading) return 'Loading...';
+  if (isLoading)
+    return (
+      <div className='flex items-center justify-center h-[50vh]'>
+        <Image
+          src='/spinner.svg'
+          alt='spinner'
+          className='animate-spin'
+          width={220}
+          height={220}
+        />
+      </div>
+    );
 
   return (
     <>
