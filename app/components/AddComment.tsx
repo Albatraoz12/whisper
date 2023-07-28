@@ -32,7 +32,6 @@ export default function AddComment({ id }: PostProps) {
         toast.success('Added your comment', { id: commentToastId });
       },
       onError: (error) => {
-        console.log(error);
         setIsDisabled(false);
         if (error instanceof AxiosError) {
           toast.error(error?.response?.data.message, { id: commentToastId });

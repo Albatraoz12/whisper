@@ -26,13 +26,11 @@ const EditWhisper = ({
     },
     {
       onError: (error) => {
-        console.log(error);
         toast.error('Error while deleteing the post, try again later!', {
           id: deleteToastID,
         });
       },
       onSuccess: (data) => {
-        console.log(data);
         toast.success('Your post has now been deleted', { id: deleteToastID });
         queryClient.invalidateQueries(['getAuthWhispers']);
       },

@@ -17,7 +17,7 @@ const MyWhispers = () => {
   });
 
   if (isLoading) return <h1>Loading Posts.....</h1>;
-  console.log('data', data);
+
   return (
     <div className='flex flex-col gap-3 mt-12'>
       {data &&

@@ -33,7 +33,6 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
 
     return NextResponse.json(newUser);
   } catch (error) {
-    console.log(error);
     return (
       NextResponse.json({ message: 'POST Error: ', error }), { status: 500 }
     );
@@ -81,7 +80,6 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 
     return NextResponse.json(userWhispers);
   } catch (error) {
-    console.log(error);
     return (
       NextResponse.json({ message: 'GET Error: ', error }), { status: 500 }
     );

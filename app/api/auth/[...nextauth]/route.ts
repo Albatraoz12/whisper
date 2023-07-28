@@ -28,8 +28,6 @@ export const authOpstions: AuthOptions = {
           where: { email },
         });
 
-        console.log('user:', user);
-
         if (!user) return null;
 
         const isPasswordValid = await bcrypt.compare(password, user.password);

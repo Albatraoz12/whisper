@@ -42,7 +42,6 @@ export const POST = async (request: NextRequest) => {
 
     return NextResponse.json({ message: 'Comment has been created!' });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { message: "Your whisper wasen't quiet enough", error },
       { status: 500 }
