@@ -27,7 +27,7 @@ const MyWhispers = () => {
             key={whisper.id}
             avatar={
               whisper.author.username
-                ? `https://avatars.dicebear.com/api/identicon/${whisper.author.name}.svg`
+                ? `https://avatars.dicebear.com/api/identicon/${whisper.author.username}.svg`
                 : whisper.author.image
             }
             name={
