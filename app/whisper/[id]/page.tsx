@@ -1,6 +1,7 @@
 'use client';
 import AddComment from '@/app/components/AddComment';
 import Comments from '@/app/components/Comments';
+import Spinner from '@/app/components/Spinner';
 import Whispers from '@/app/components/Whispers';
 import { WhispersTyps } from '@/app/types/Whispers';
 import axios from 'axios';
@@ -20,7 +21,7 @@ const Page = ({ params }: any) => {
   });
 
   if (error) return <div>Error</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
 
   if (!data) {
     return <div>No data found.</div>;

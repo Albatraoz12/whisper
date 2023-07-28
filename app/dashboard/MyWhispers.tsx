@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { WhispersTyps } from '../types/Whispers';
 import EditWhisper from './EditWhisper';
+import Spinner from '../components/Spinner';
 
 const fetchAuthWhispers = async () => {
   const response = await axios.get('/api/auth/user');
@@ -16,7 +17,7 @@ const MyWhispers = () => {
     queryKey: ['getAuthWhispers'],
   });
 
-  if (isLoading) return <h1>Loading Posts.....</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className='flex flex-col gap-3 mt-12'>
