@@ -9,7 +9,7 @@ export default async function Navbar() {
 
   return (
     <nav className='flex justify-between item-center py-8 w-[90%] mx-auto'>
-      <Link href={'/'}>
+      <Link href={'/'} className='items-center flex'>
         <h1 className='font-bold text-lg'>Whispers</h1>
       </Link>
       <ul className='flex items-center gap-6'>
