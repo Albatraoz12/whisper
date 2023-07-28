@@ -11,6 +11,7 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
           select: {
             username: true,
             name: true,
+            image: true,
           },
         },
         comments: {

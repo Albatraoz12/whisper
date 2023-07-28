@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Whispers = ({ Whisps }: any) => {
   const formatCreatedAt = (createdAt: string) => {
@@ -20,7 +21,20 @@ const Whispers = ({ Whisps }: any) => {
             className='border-2 rounded p-6 border-white'
           >
             <a href={`/whisper/${whisper.id}`} className='flex flex-col gap-4'>
-              <h2>{whisper.author.username || whisper.author?.name}</h2>
+              <div className='flex gap-3'>
+                <Image
+                  src={
+                    whisper.author.image
+                      ? whisper.author.image
+                      : `https://avatars.dicebear.com/api/identicon/${whisper.author.username}.svg`
+                  }
+                  alt='users image'
+                  width={32}
+                  height={32}
+                  className='rounded-full'
+                />
+                <h2>{whisper.author.username || whisper.author?.name}</h2>
+              </div>
               <p>{whisper.content}</p>
               <div className='flex justify-between'>
                 <span>{whisper.comments.length} 💬</span>
@@ -36,7 +50,20 @@ const Whispers = ({ Whisps }: any) => {
           transition={{ duration: 0.5 }}
           className='border-2 rounded p-6 border-white'
         >
-          <h2>{Whisps?.author?.username || Whisps?.author.name}</h2>
+          <div className='flex gap-3'>
+            <Image
+              src={
+                Whisps.author.image
+                  ? Whisps.author.image
+                  : `https://avatars.dicebear.com/api/identicon/${Whisps.author.username}.svg`
+              }
+              alt='users image'
+              width={32}
+              height={32}
+              className='rounded-full'
+            />
+            <h2>{Whisps.author.username || Whisps.author?.name}</h2>
+          </div>
           <p>{Whisps?.content}</p>
           <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
         </motion.div>
