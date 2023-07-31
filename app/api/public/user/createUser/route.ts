@@ -3,7 +3,7 @@
 import { generateUsername } from '@/app/libs/helpers';
 import prisma from '@/app/libs/prismaConn';
 import { NextResponse } from 'next/server';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 // Create User
 export const POST = async (request: Request) => {
