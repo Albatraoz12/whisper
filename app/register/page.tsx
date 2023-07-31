@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axios from 'axios';
@@ -14,6 +15,7 @@ const schema = z.object({
 });
 
 const Register = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,7 +33,6 @@ const Register = () => {
       password,
     };
 
-    // Check if passwords match
     if (password !== confPassword) {
       console.error('Passwords do not match');
       return;
@@ -42,7 +43,7 @@ const Register = () => {
         '/api/public/user/createUser',
         formData
       );
-      console.log(response.data);
+      router.push('/api/auth/signin');
     } catch (error) {
       console.error('Error while creating user:', error);
     }
