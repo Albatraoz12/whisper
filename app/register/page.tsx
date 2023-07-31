@@ -1,5 +1,7 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +18,7 @@ const schema = z.object({
 
 const Register = () => {
   const router = useRouter();
+  let toastID: string;
   const {
     register,
     handleSubmit,
@@ -23,6 +26,21 @@ const Register = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
+
+  const mutation = useMutation(
+    (data: any) => axios.post('/api/public/user/createUser', data),
+    {
+      onError: (error) => {
+        toast.error('Error while creating user, try again later!', {
+          id: toastID,
+        });
+      },
+      onSuccess: (data) => {
+        toast.success('User has been created successfully', { id: toastID });
+        router.push('/api/auth/signin');
+      },
+    }
+  );
 
   const onSubmit = async (data: any) => {
     const { firstName, lastName, email, password, confPassword } = data;
@@ -39,11 +57,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(
-        '/api/public/user/createUser',
-        formData
-      );
-      router.push('/api/auth/signin');
+      mutation.mutate(formData);
     } catch (error) {
       console.error('Error while creating user:', error);
     }
@@ -172,7 +186,7 @@ const Register = () => {
               {...register('confPassword')}
               id='confPassword'
               type='password'
-              name='confPassword' // Add the 'name' attribute
+              name='confPassword'
               placeholder='******************'
             />
             {errors.confPassword && (
