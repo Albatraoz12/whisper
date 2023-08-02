@@ -8,37 +8,39 @@ export const POST = async (request: NextRequest) => {
   try {
     const session = await getServerSession(authOpstions);
     const body = await request.json();
-    const { content } = body;
+    const { content, whisperId } = body.data;
 
     if (!content)
       return NextResponse.json(
         { message: 'Please fill in the feild' },
         { status: 400 }
       );
+
     if (!session)
       return NextResponse.json(
-        { message: 'You need to bee signin to whisper' },
+        { message: 'You need to be signed in to comment' },
+        { status: 403 }
+      );
+
+    const findUser = await prisma.user.findUnique({
+      where: { id: session?.user.id },
+    });
+
+    if (!findUser)
+      return NextResponse.json(
+        { message: 'There is no user with that id' },
         { status: 400 }
       );
 
-    const authorId = session?.user.id;
-
-    const whisper = await prisma.whisper.create({
+    const result = await prisma.comment.create({
       data: {
-        authorId,
-        content,
-      },
-      select: {
-        id: true,
-        author: {
-          select: {
-            username: true,
-          },
-        },
+        title: content,
+        userId: findUser.id,
+        whisperId: whisperId,
       },
     });
 
-    return NextResponse.json({ message: whisper });
+    return NextResponse.json({ message: 'Comment has been created!' });
   } catch (error) {
     return NextResponse.json(
       { message: "Your whisper wasen't quiet enough", error },

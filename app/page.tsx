@@ -4,6 +4,8 @@ import Whispers from './components/Whispers';
 import { useQuery } from 'react-query';
 import { WhispersTyps } from './types/Whispers';
 import axios from 'axios';
+import Image from 'next/image';
+import Spinner from './components/Spinner';
 
 export default function Home() {
   const getWhispers = async () => {
@@ -16,7 +18,7 @@ export default function Home() {
     queryKey: ['whispers'],
   });
   if (error) return error;
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <Spinner />;
 
   return (
     <>

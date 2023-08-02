@@ -6,10 +6,11 @@ import Logged from './auth/Logged';
 
 export default async function Navbar() {
   const session = await getServerSession(authOpstions);
+  console.log(session);
 
   return (
     <nav className='flex justify-between item-center py-8 w-[90%] mx-auto'>
-      <Link href={'/'}>
+      <Link href={'/'} className='items-center flex'>
         <h1 className='font-bold text-lg'>Whispers</h1>
       </Link>
       <ul className='flex items-center gap-6'>

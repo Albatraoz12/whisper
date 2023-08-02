@@ -11,3 +11,8 @@ export function generateUsername(firstName: string, lastName: string) {
 
   return username;
 }
+
+export const formatCreatedAt = (createdAt: string) => {
+  const date = new Date(createdAt);
+  return date.toLocaleDateString('sv-SE');
+};

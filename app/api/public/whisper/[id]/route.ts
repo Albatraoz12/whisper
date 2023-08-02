@@ -14,6 +14,20 @@ export const GET = async (request: NextRequest, { params }: any) => {
           select: {
             username: true,
             name: true,
+            image: true,
+          },
+        },
+        comments: {
+          select: {
+            id: true,
+            title: true,
+            createdAt: true,
+            user: {
+              select: {
+                username: true,
+                name: true,
+              },
+            },
           },
         },
       },

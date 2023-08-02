@@ -33,9 +33,55 @@ export const PUT = async (request: NextRequest, response: NextResponse) => {
 
     return NextResponse.json(newUser);
   } catch (error) {
-    console.log(error);
     return (
       NextResponse.json({ message: 'POST Error: ', error }), { status: 500 }
+    );
+  }
+};
+
+export const GET = async (req: NextRequest, res: NextResponse) => {
+  try {
+    const session = await getServerSession(authOpstions);
+
+    if (!session)
+      return NextResponse.json(
+        { message: 'You need to be signed in to access the Dashboard' },
+        { status: 404 }
+      );
+
+    // Search for user
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+    });
+
+    if (!user)
+      return NextResponse.json(
+        { message: 'No user with that id' },
+        { status: 404 }
+      );
+
+    // Fetch user's whispers using the 'authorId' field
+    const userWhispers = await prisma.whisper.findMany({
+      where: { authorId: session.user.id },
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: {
+            username: true,
+            name: true,
+            image: true,
+          },
+        },
+        comments: true,
+      },
+    });
+
+    return NextResponse.json(userWhispers);
+  } catch (error) {
+    return (
+      NextResponse.json({ message: 'GET Error: ', error }), { status: 500 }
     );
   }
 };

@@ -18,7 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={`${inter.className} max-w-[1000px] mx-auto`}>
+      <body
+        className={`${inter.className} max-w-[1000px] min-h-[100vh] mx-auto border-0 xl:border-x-2 xl:border-x-slate-400`}
+      >
         <QueryWrapper>
           <Navbar />
           <main className='w-[90%] container mx-auto'>{children}</main>
