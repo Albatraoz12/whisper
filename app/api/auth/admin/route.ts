@@ -12,14 +12,13 @@ export const POST = async (request: Request) => {
   try {
     const body = await request.json();
     const { email, password, firstName, lastName, role } = body;
-
+    
     //check is user is admin
-    // const session = getServerSession(authOpstions);
+    const session = await getServerSession(authOpstions);
 
-
-    // const isAdmin = await prisma.user.findUnique({ where: { email: session?.user.email } });
-
-    // if(isAdmin.role !== 'admin') return NextResponse.json({message: 'Only admins are allowed in this route'}, {status: 400})
+    const isAdmin = await prisma.user.findUnique({ where: { email: session?.user.email } });
+    
+    if(isAdmin.role !== 'admin') return NextResponse.json({message: 'Only admins are allowed in this route'}, {status: 400})
 
     // Check if email is avalible
     const isUser = await prisma.user.findUnique({ where: { email: email } });
