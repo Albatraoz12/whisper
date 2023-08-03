@@ -30,7 +30,7 @@ const RegisterUser = () => {
   });
 
   const mutation = useMutation(
-    (data: any) => axios.post('/api/public/user/createUser', data),
+    (data: any) => axios.post('/api/auth/admin', data),
     {
       onError: (error) => {
         toast.error('Error while creating user, try again later!', {
@@ -45,11 +45,12 @@ const RegisterUser = () => {
   );
 
   const onSubmit = async (data: any) => {
-    const { firstName, lastName, email, password, confPassword } = data;
+    const { firstName, lastName, email, password, confPassword,role } = data;
     const formData = {
       firstName,
       lastName,
       email,
+      role,
       password,
     };
 
