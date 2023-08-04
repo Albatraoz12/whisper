@@ -24,6 +24,7 @@ const RegisterUser = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
@@ -39,7 +40,7 @@ const RegisterUser = () => {
       },
       onSuccess: (data) => {
         toast.success('User has been created successfully', { id: toastID });
-        router.push('/api/auth/signin');
+        reset();
       },
     }
   );
