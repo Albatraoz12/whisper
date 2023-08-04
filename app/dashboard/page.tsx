@@ -13,8 +13,7 @@ const Dashboard = async () => {
 
   return (
     <section>
-      {session.user.role === 'admin' && <Admin />}
-      <MyWhispers />
+      {session.user.role === 'admin' ? <Admin /> : <MyWhispers />}
     </section>
   );
 };
