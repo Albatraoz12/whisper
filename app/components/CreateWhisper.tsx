@@ -1,8 +1,10 @@
 'use client';
 import React, { FormEvent, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 const CreateWhisper = () => {
   const [whisperContent, setWhisperContent] = useState('');
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -18,10 +20,10 @@ const CreateWhisper = () => {
       }),
     });
     const data = (await res).json();
-    if (!data) return null;
-    alert('You have whispered into the world');
 
-    // Reset the textarea value
+    if (!data) return null;
+
+    queryClient.invalidateQueries(['whispers']);
     setWhisperContent('');
   };
 
