@@ -6,7 +6,6 @@ import Logged from './auth/Logged';
 
 export default async function Navbar() {
   const session = await getServerSession(authOpstions);
-  console.log(session);
 
   return (
     <nav className='flex justify-between item-center py-8 w-[90%] mx-auto'>
