@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 import { authOpstions } from '../api/auth/[...nextauth]/route';
 import MyWhispers from './MyWhispers';
+import Admin from '../components/auth/admin/Admin';
 
 const Dashboard = async () => {
   const session = await getServerSession(authOpstions);
@@ -12,7 +13,7 @@ const Dashboard = async () => {
 
   return (
     <section>
-      <MyWhispers />
+      {session.user.role === 'admin' ? <Admin /> : <MyWhispers />}
     </section>
   );
 };

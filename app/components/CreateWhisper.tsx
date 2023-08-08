@@ -1,37 +1,47 @@
 'use client';
+import axios, { AxiosError } from 'axios';
 import React, { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useMutation, useQueryClient } from 'react-query';
 
 const CreateWhisper = () => {
   const [whisperContent, setWhisperContent] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+  const queryClient = useQueryClient();
+  let toastPostID: string;
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const form = new FormData(e.target as HTMLFormElement);
-
-    const res = fetch('/api/auth/whisper', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        content: form.get('whisper'),
+  //Create a whisper
+  const { mutate } = useMutation(
+    async (whisperContent: string) =>
+      await axios.post('/api/auth/whisper', {
+        content: whisperContent,
       }),
-    });
-    const data = (await res).json();
-    if (!data) return null;
-    alert('You have whispered into the world');
+    {
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          toast.error(error?.response?.data.message, { id: toastPostID });
+        }
+        setIsDisabled(false);
+      },
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(['whispers']);
+        toast.success('Post has been made 🔥', { id: toastPostID });
+        setWhisperContent('');
+        setIsDisabled(false);
+      },
+    }
+  );
 
-    // Reset the textarea value
-    setWhisperContent('');
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setWhisperContent(e.target.value);
+  const submitWhisper = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsDisabled(false);
+    toastPostID = toast.loading('Creating your post', { id: toastPostID });
+    mutate(whisperContent);
   };
 
   return (
     <>
-      <form className='flex flex-col gap-10 mt-10' onSubmit={handleSubmit}>
+      <form className='flex flex-col gap-10 mt-10' onSubmit={submitWhisper}>
         <label htmlFor='whisper' className='hidden'>
           Whisper
         </label>
@@ -43,7 +53,7 @@ const CreateWhisper = () => {
           className='bg-black text-white border-2 p-4 active:outline-none focus:border-gray-300 focus:outline-none'
           placeholder='Whisper into my ear'
           value={whisperContent}
-          onChange={handleChange}
+          onChange={(e) => setWhisperContent(e.target.value)}
         />
         <button
           type='submit'

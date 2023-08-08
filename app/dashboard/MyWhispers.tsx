@@ -21,7 +21,7 @@ const MyWhispers = () => {
 
   return (
     <div className='flex flex-col gap-3 mt-12'>
-      {data &&
+      {data && data.length > 0 ? (
         data.map((whisper: any) => (
           <EditWhisper
             id={whisper.id}
@@ -40,7 +40,12 @@ const MyWhispers = () => {
             comments={whisper.comments}
             createdAt={whisper.createdAt}
           />
-        ))}
+        ))
+      ) : (
+        <>
+          <p>You haven&apos;t created any whispers yet...</p>
+        </>
+      )}
     </div>
   );
 };
