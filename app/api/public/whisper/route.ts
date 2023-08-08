@@ -33,6 +33,9 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
       },
     });
 
+    console.log(allWhispers);
+    console.log(allWhispers.length);
+
     return NextResponse.json({ whispers: allWhispers }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
