@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Whisper',
   description: 'A new social media app where you all can whisper to each other',
