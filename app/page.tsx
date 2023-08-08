@@ -10,6 +10,7 @@ import Spinner from './components/Spinner';
 export default function Home() {
   const getWhispers = async () => {
     const response = await axios.get('/api/public/whisper');
+    console.log(response.data.whispers);
     return response.data.whispers;
   };
 
