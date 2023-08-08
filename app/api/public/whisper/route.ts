@@ -2,8 +2,9 @@
 import prisma from '@/app/libs/prismaConn';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
 // Get all user whispers with author information (including username)
-export const GET = async (request: NextRequest, response: NextResponse) => {
+export const GET = async () => {
   try {
     const allWhispers = await prisma.whisper.findMany({
       include: {
@@ -32,9 +33,6 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
         createdAt: 'desc',
       },
     });
-
-    console.log(allWhispers);
-    console.log(allWhispers.length);
 
     return NextResponse.json({ whispers: allWhispers }, { status: 200 });
   } catch (error) {
