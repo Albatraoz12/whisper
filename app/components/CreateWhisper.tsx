@@ -3,10 +3,12 @@ import axios, { AxiosError } from 'axios';
 import React, { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
+import Spinner from './Spinner';
 
 const CreateWhisper = () => {
   const [whisperContent, setWhisperContent] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
   const characterLimit = 250;
   let toastPostID: string;
@@ -18,6 +20,13 @@ const CreateWhisper = () => {
         content: whisperContent,
       }),
     {
+      onMutate: () => {
+        setIsDisabled(true);
+        setIsLoading(true);
+        toastPostID = toast.loading('You are whispering...', {
+          id: toastPostID,
+        });
+      },
       onError: (error) => {
         if (error instanceof AxiosError) {
           toast.error(error?.response?.data.message, { id: toastPostID });
@@ -27,8 +36,9 @@ const CreateWhisper = () => {
       },
       onSuccess: (data) => {
         queryClient.invalidateQueries(['whispers']);
-        toast.success('Post has been made 🔥', { id: toastPostID });
+        toast.success('Your whisper echoed...', { id: toastPostID });
         setWhisperContent('');
+        setIsLoading(false);
         setIsDisabled(false);
       },
     }
@@ -57,9 +67,9 @@ const CreateWhisper = () => {
         <textarea
           name='whisper'
           id='whisper'
-          cols={50}
-          rows={5}
-          className='bg-black text-white border-2 p-4 active:outline-none focus:border-gray-300 focus:outline-none'
+          cols={10}
+          rows={3}
+          className='bg-black text-white border-2 p-4 rounded active:outline-none focus:border-gray-300 focus:outline-none'
           placeholder='Whisper into my ear'
           value={whisperContent}
           onChange={(e) => setWhisperContent(e.target.value)}
@@ -75,7 +85,7 @@ const CreateWhisper = () => {
             }`}
             disabled={isDisabled}
           >
-            Whisper
+            {isLoading ? <Spinner /> : 'Whisper'}
           </button>
         </div>
       </form>
