@@ -20,6 +20,7 @@ const CreateWhisper = () => {
       onError: (error) => {
         if (error instanceof AxiosError) {
           toast.error(error?.response?.data.message, { id: toastPostID });
+          setWhisperContent('');
         }
         setIsDisabled(false);
       },
