@@ -54,7 +54,10 @@ export default function Login() {
       </p>
       <span className='max-w-[80%] w-full border-t-2 border-white my-4'></span>
 
-      <button className='flex gap-3' onClick={() => signIn('google')}>
+      <button
+        className='flex gap-3'
+        onClick={() => signIn('google', { callbackUrl: '/' })}
+      >
         <Image
           src={'https://freesvg.org/img/1534129544.png'}
           height={25}
