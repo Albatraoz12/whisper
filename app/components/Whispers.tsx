@@ -66,7 +66,7 @@ const Whispers = ({ Whisps }: any) => {
           </div>
           <p>{Whisps?.content}</p>
           <div className='flex justify-between my-3'>
-            <Heart id={Whisps.id} />
+            <Heart id={Whisps.id} likes={Whisps.likes} />
             <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
           </div>
         </motion.div>

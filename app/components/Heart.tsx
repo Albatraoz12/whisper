@@ -1,20 +1,20 @@
-'use client';
 import axios from 'axios';
 import Image from 'next/image';
 import React from 'react';
 
-const Heart = ({ id }: any) => {
-  console.log('id', id);
-
+const Heart = ({ id, likes }: any) => {
   const like = async () => {
-    const response = await axios.post(`/api/auth/whisper/like/${id}`);
-    const data = await response.data;
-    console.log(data);
-    return data;
+    try {
+      const response = await axios.post(`/api/auth/whisper/like/${id}`);
+      const data = await response.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <>
+    <div className='flex gap-2 items-center'>
       <button type='button' onClick={() => like()}>
         <Image
           src={'/heart.svg'}
@@ -23,7 +23,8 @@ const Heart = ({ id }: any) => {
           alt='heart shape icon'
         />
       </button>
-    </>
+      <span>{likes.length}</span>
+    </div>
   );
 };
 
