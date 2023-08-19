@@ -30,7 +30,7 @@ const Page = ({ params }: any) => {
   return (
     <>
       <section>
-        <Whispers Whisps={[data]} />
+        <Whispers Whisps={data} />
       </section>
       <section>
         <AddComment id={data.id} />
