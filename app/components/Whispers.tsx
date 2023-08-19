@@ -1,7 +1,7 @@
-'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Heart from './Heart';
 
 const Whispers = ({ Whisps }: any) => {
   const formatCreatedAt = (createdAt: string) => {
@@ -64,8 +64,9 @@ const Whispers = ({ Whisps }: any) => {
             />
             <h2>{Whisps.author.username || Whisps.author?.name}</h2>
           </div>
+          <p>{Whisps?.content}</p>
           <div className='flex justify-between my-3'>
-            <p>{Whisps?.content}</p>
+            <Heart id={Whisps.id} />
             <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
           </div>
         </motion.div>
