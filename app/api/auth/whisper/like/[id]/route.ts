@@ -18,12 +18,12 @@ export const POST = async (request: NextRequest, { params }: any) => {
         { status: 400 }
       );
 
-    const authorId = session.user.id;
+    const userId = session.user.id;
 
     // Check if the user has already liked the whisper
     const existingLike = await prisma.like.findFirst({
       where: {
-        authorId,
+        userId,
         whisperId,
       },
     });
@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest, { params }: any) => {
 
     const createdLike = await prisma.like.create({
       data: {
-        user: { connect: { id: authorId } },
+        user: { connect: { id: userId } },
         whisper: { connect: { id: whisperId } },
       },
     });
