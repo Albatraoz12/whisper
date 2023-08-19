@@ -30,6 +30,11 @@ export const GET = async (request: NextRequest, { params }: any) => {
             },
           },
         },
+        likes: {
+          select: {
+            userId: true,
+          },
+        },
       },
     });
 
@@ -40,7 +45,12 @@ export const GET = async (request: NextRequest, { params }: any) => {
       );
     }
 
-    return NextResponse.json(whisper, { status: 200 });
+    const modifiedWhisper = {
+      ...whisper,
+      likes: whisper.likes.map((like: any) => like.userId),
+    };
+
+    return NextResponse.json(modifiedWhisper, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: 'An error occurred while retrieving the whisper' },
