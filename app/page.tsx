@@ -4,7 +4,6 @@ import Whispers from './components/Whispers';
 import { useQuery } from 'react-query';
 import { WhispersTyps } from './types/Whispers';
 import axios from 'axios';
-import Image from 'next/image';
 import Spinner from './components/Spinner';
 
 const getWhispers = async () => {

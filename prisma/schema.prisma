@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  username  String?    @unique
+  username  String?    
   email     String     @unique
   password  String?    
   name      String?
@@ -25,6 +25,7 @@ model User {
   updatedAt DateTime   @updatedAt
   whispers  Whisper[]
   comments  Comment[]
+  likes     Like[]
   accounts  Account[]
   sessions  Session[]
 }
@@ -37,6 +38,19 @@ model Whisper {
   author    User        @relation(fields: [authorId], references: [id])
   authorId  String      @db.ObjectId
   comments  Comment[]
+  likes     Like[]
+}
+
+model Like {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  user      User        @relation(fields: [userId], references: [id])
+  userId    String      @db.ObjectId
+  whisper   Whisper     @relation(fields: [whisperId], references: [id])
+  whisperId String      @db.ObjectId
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([userId, whisperId])
 }
 
 model Comment {

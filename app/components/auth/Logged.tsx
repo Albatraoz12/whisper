@@ -4,13 +4,13 @@ import Image from 'next/image';
 
 export default function Logged({ user }: any) {
   return (
-    <li className='flex gap-8 items-center'>
+    <li className='flex gap-2 items-center'>
       {user && user.image ? (
         <a href='/dashboard'>
           <Image
-            className='w-14 rounded-full'
-            width={64}
-            height={64}
+            className='w-auto rounded-full'
+            width={42}
+            height={42}
             src={user.image}
             alt='user progile pic'
             priority
@@ -19,9 +19,9 @@ export default function Logged({ user }: any) {
       ) : (
         <a href='/dashboard'>
           <Image
-            className='w-14 rounded-full'
-            width={64}
-            height={64}
+            className='w-10 rounded-full'
+            width={42}
+            height={42}
             src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
             alt='user progile pic'
             priority

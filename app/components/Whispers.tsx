@@ -1,7 +1,7 @@
-'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Heart from './Heart';
 
 const Whispers = ({ Whisps }: any) => {
   const formatCreatedAt = (createdAt: string) => {
@@ -11,7 +11,7 @@ const Whispers = ({ Whisps }: any) => {
 
   return (
     <div className='flex flex-col gap-3 mt-12'>
-      {Array.isArray(Whisps) && Whisps.length > 0 ? (
+      {Array.isArray(Whisps) && Whisps.length >= 2 ? (
         Whisps.map((whisper: any, index: number) => (
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -50,10 +50,10 @@ const Whispers = ({ Whisps }: any) => {
           transition={{ duration: 0.5 }}
           className='border-2 rounded p-6 border-white'
         >
-          <div className='flex gap-3'>
+          <div className='flex items-center gap-3 mb-6'>
             <Image
               src={
-                Whisps.author.image
+                Whisps.author && Whisps.author.image
                   ? Whisps.author.image
                   : `https://avatars.dicebear.com/api/identicon/${Whisps.author.username}.svg`
               }
@@ -65,7 +65,10 @@ const Whispers = ({ Whisps }: any) => {
             <h2>{Whisps.author.username || Whisps.author?.name}</h2>
           </div>
           <p>{Whisps?.content}</p>
-          <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
+          <div className='flex justify-between my-3'>
+            <Heart id={Whisps.id} likes={Whisps.likes} />
+            <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
+          </div>
         </motion.div>
       )}
     </div>
