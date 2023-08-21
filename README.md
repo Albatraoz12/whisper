@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Introduction
 
-## Getting Started
+Welcome all to my fullstack webb project called whisper app. This is a website to create posts which I have called whispers. It is a site where users can create/read/update/delete whispers.
 
-First, run the development server:
+## Tools
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+To create this project I've used NextJs 13 to create both the front- and backend, used Prisma with mongodb adapter, Nextauth to handle my authorization/authentication with the google and credential providers and I have also used React Query to handle my data fetching.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How to get started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To get started you need first to clone this repository with the comand  
+`git clone git@github.com:Albatraoz12/whisper.git`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+After you have clone this repository you need to create a .env file in the root of the project and fill in the values for the variables:
 
-## Learn More
+DATABASE_URL=
 
-To learn more about Next.js, take a look at the following resources:
+NEXTAUTH_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+NEXTAUTH_SECRET=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+GOOGLE_CLIENT_SECRET=
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+GOOGLE_CLIENT_ID=
