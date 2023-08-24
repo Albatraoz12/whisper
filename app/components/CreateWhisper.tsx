@@ -93,7 +93,14 @@ const CreateWhisper = () => {
             }`}
             disabled={isDisabled}
           >
-            {isLoading ? <Spinner small={true} /> : 'Whisper'}
+            {isLoading ? (
+              <span className='flex gap-2'>
+                creating...
+                <Spinner small={true} />
+              </span>
+            ) : (
+              'Whisper'
+            )}
           </button>
         </div>
       </form>
