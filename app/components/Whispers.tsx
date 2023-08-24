@@ -1,9 +1,12 @@
+'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Heart from './Heart';
+import { useSession } from 'next-auth/react';
 
 const Whispers = ({ Whisps }: any) => {
+  const userDetails = useSession();
   const formatCreatedAt = (createdAt: string) => {
     const date = new Date(createdAt);
     return date.toLocaleDateString('sv-SE');
@@ -66,7 +69,11 @@ const Whispers = ({ Whisps }: any) => {
           </div>
           <p>{Whisps?.content}</p>
           <div className='flex justify-between my-3'>
-            <Heart id={Whisps.id} likes={Whisps.likes} />
+            <Heart
+              id={Whisps.id}
+              likes={Whisps.likes}
+              userId={userDetails.data?.user?.id}
+            />
             <p>{formatCreatedAt(Whisps?.createdAt || '')}</p>
           </div>
         </motion.div>
