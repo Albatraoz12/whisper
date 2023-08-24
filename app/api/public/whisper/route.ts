@@ -28,6 +28,11 @@ export const GET = async () => {
             },
           },
         },
+        likes: {
+          select: {
+            userId: true,
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',

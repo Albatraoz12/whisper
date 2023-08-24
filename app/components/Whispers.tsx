@@ -12,6 +12,7 @@ const Whispers = ({ Whisps }: any) => {
     return date.toLocaleDateString('sv-SE');
   };
 
+  console.log(Whisps);
   return (
     <div className='flex flex-col gap-3 mt-12'>
       {Array.isArray(Whisps) && Whisps.length >= 2 ? (
@@ -40,7 +41,10 @@ const Whispers = ({ Whisps }: any) => {
               </div>
               <p>{whisper.content}</p>
               <div className='flex justify-between'>
-                <span>{whisper.comments.length} 💬</span>
+                <div className='flex gap-3'>
+                  <span>{whisper.comments.length} 💬</span>
+                  <span>{whisper.likes.length} &#10084;</span>
+                </div>
                 <span>{formatCreatedAt(whisper.createdAt)}</span>
               </div>
             </a>
