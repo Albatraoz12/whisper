@@ -42,15 +42,31 @@ const Heart = ({ id, likes, userId }: any) => {
 
   return (
     <div className='flex gap-2 items-center'>
-      <button type='button' onClick={() => like()}>
-        <Image
-          src={hasLiked ? '/likedHeart.svg' : '/heart.svg'}
-          height={30}
-          width={30}
-          alt='heart shape icon'
-        />
-      </button>
-      <span>{likes.length}</span>
+      {hasLiked ? (
+        <>
+          <button type='button' onClick={() => like()}>
+            <Image
+              src={'/likedHeart.svg'}
+              height={30}
+              width={30}
+              alt='heart shape icon'
+            />
+          </button>
+          <span>{likes.length}</span>
+        </>
+      ) : (
+        <>
+          <button type='button' onClick={() => like()}>
+            <Image
+              src={'/heart.svg'}
+              height={30}
+              width={30}
+              alt='heart shape icon'
+            />
+          </button>
+          <span>{likes.length}</span>
+        </>
+      )}
     </div>
   );
 };
