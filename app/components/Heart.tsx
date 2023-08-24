@@ -12,8 +12,12 @@ const Heart = ({ id, likes, userId }: any) => {
   let commentToastId: string;
 
   const { mutate } = useMutation(
-    async () => {
-      return axios.post(`/api/auth/whisper/like/${id}`);
+    async (type: number) => {
+      if (type === 2) {
+        return axios.delete(`/api/auth/whisper/like/${id}`);
+      } else {
+        return axios.post(`/api/auth/whisper/like/${id}`);
+      }
     },
     {
       onSuccess: (data) => {
@@ -33,18 +37,19 @@ const Heart = ({ id, likes, userId }: any) => {
     setHasLiked(userHasLiked);
   }, [likes, userId]);
 
+  const unLike = () => {
+    mutate(2);
+  };
+
   const like = () => {
-    commentToastId = toast.loading('Adding your comment', {
-      id: commentToastId,
-    });
-    mutate();
+    mutate(1);
   };
 
   return (
     <div className='flex gap-2 items-center'>
       {hasLiked ? (
         <>
-          <button type='button' onClick={() => like()}>
+          <button type='button' onClick={() => unLike()}>
             <Image
               src={'/likedHeart.svg'}
               height={30}

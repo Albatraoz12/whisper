@@ -5,8 +5,6 @@ import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOpstions } from '../../../[...nextauth]/route';
 
-// update whisper
-
 export const POST = async (request: NextRequest, { params }: any) => {
   try {
     const session = await getServerSession(authOpstions);
@@ -46,6 +44,45 @@ export const POST = async (request: NextRequest, { params }: any) => {
 
     return NextResponse.json({ message: 'You have liked this whisper' });
   } catch (error) {
+    return NextResponse.json(error, { status: 500 });
+  }
+};
+
+export const DELETE = async (request: NextRequest, { params }: any) => {
+  try {
+    const session = await getServerSession(authOpstions);
+    const whisperId = params.id;
+
+    if (!session)
+      return NextResponse.json(
+        { message: 'Not Authenticaded' },
+        { status: 400 }
+      );
+
+    const userId = session.user.id;
+
+    // Check if the user has already liked the whisper
+    const existingLike = await prisma.like.findFirst({
+      where: {
+        userId,
+        whisperId,
+      },
+    });
+
+    // validate the real author to delete it
+    if (!existingLike) {
+      return NextResponse.json({
+        message: 'You have not liked this whisper.',
+      });
+    }
+
+    const deleteLike = await prisma.like.delete({
+      where: { id: existingLike.id },
+    });
+
+    return NextResponse.json({ message: 'You have unliked this whisper' });
+  } catch (error) {
+    console.log(error);
     return NextResponse.json(error, { status: 500 });
   }
 };
