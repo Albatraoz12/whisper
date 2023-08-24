@@ -21,7 +21,7 @@ const Page = ({ params }: any) => {
   });
 
   if (error) return <div>Error</div>;
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner small={false} />;
 
   if (!data) {
     return <div>No data found.</div>;
