@@ -32,7 +32,6 @@ const Heart = ({ id, likes, userId }: any) => {
     const userHasLiked = likes.some((like: any) => like === userId);
     setHasLiked(userHasLiked);
   }, [likes, userId]);
-  console.log(hasLiked);
 
   const like = () => {
     commentToastId = toast.loading('Adding your comment', {
