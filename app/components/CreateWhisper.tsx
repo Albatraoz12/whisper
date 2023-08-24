@@ -31,6 +31,7 @@ const CreateWhisper = () => {
         if (error instanceof AxiosError) {
           toast.error(error?.response?.data.message, { id: toastPostID });
           setWhisperContent('');
+          setIsLoading(false);
         }
         setIsDisabled(false);
       },
@@ -45,16 +46,23 @@ const CreateWhisper = () => {
   );
 
   const submitWhisper = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (whisperContent.length > 0 && whisperContent.length <= characterLimit) {
-      setIsDisabled(true);
-      toastPostID = toast.loading('Creating your post', { id: toastPostID });
-      mutate(whisperContent);
-    } else {
-      toast.error(
-        `Whisper should be between 1 and ${characterLimit} characters`,
-        { id: toastPostID }
-      );
+    try {
+      e.preventDefault();
+      if (
+        whisperContent.length > 0 &&
+        whisperContent.length <= characterLimit
+      ) {
+        setIsDisabled(true);
+        toastPostID = toast.loading('Creating your post', { id: toastPostID });
+        mutate(whisperContent);
+      } else {
+        toast.error(
+          `Whisper should be between 1 and ${characterLimit} characters`,
+          { id: toastPostID }
+        );
+      }
+    } catch (error) {
+      return;
     }
   };
 
@@ -85,7 +93,7 @@ const CreateWhisper = () => {
             }`}
             disabled={isDisabled}
           >
-            {isLoading ? <Spinner /> : 'Whisper'}
+            {isLoading ? <Spinner small={true} /> : 'Whisper'}
           </button>
         </div>
       </form>
