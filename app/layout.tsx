@@ -3,6 +3,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import QueryWrapper from './QueryWrapper';
 import Navbar from './components/Navbar';
+import { NextAuthProvider } from './Providers';
+import { authOpstions } from './api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,11 +16,12 @@ export const metadata: Metadata = {
   description: 'A new social media app where you all can whisper to each other',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOpstions);
   return (
     <html lang='en'>
       <body
@@ -25,7 +29,9 @@ export default function RootLayout({
       >
         <QueryWrapper>
           <Navbar />
-          <main className='w-[90%] container mx-auto'>{children}</main>
+          <NextAuthProvider session={session}>
+            <main className='w-[90%] container mx-auto'>{children}</main>
+          </NextAuthProvider>
         </QueryWrapper>
       </body>
     </html>

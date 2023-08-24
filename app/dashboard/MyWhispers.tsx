@@ -17,7 +17,7 @@ const MyWhispers = () => {
     queryKey: ['getAuthWhispers'],
   });
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner small={false} />;
 
   return (
     <div className='flex flex-col gap-3 mt-12'>

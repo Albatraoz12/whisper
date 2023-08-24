@@ -17,7 +17,7 @@ export default function Home() {
     queryKey: ['whispers'],
   });
   if (error) return error;
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner small={false} />;
 
   return (
     <>
